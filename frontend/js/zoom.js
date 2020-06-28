@@ -89,7 +89,7 @@ window.onload = () => {
             });
 
             socket.on('touchstart_soket_server', (data) => {
-
+                e.preventDefault()
                 if (!errored) {
                     mImg.src = inst.alter;
                 }
@@ -122,7 +122,7 @@ window.onload = () => {
             });
 
             container.addEventListener('touchend', function (e) {
-
+                e.preventDefault()
                 if (e.pointerType == "touch" && !e.isPrimary) {
                     return
                 }

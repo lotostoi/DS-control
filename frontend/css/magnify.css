@@ -1,12 +1,18 @@
+body {
+  margin: auto;
+  overflow: hidden;
+}
+
 .magnify {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
+  width: 40%;
 }
 
 .magnify img {
+  margin: auto;
   width: 100%;
   position: relative;
   display: block;
@@ -15,8 +21,8 @@
 .magnify-lens {
   position: absolute;
   z-index: 100;
-  width:  600px;
-  height: 600px;
+  width: 700px;
+  height: 700px;
   border-radius: 100%;
   -webkit-box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
           box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
@@ -45,24 +51,20 @@
 }
 
 .magnify-loading:before {
-  content: 'Loading...';
+  content: "Loading...";
   color: #fff;
 }
 
 .magnify-error:before {
-  content: 'Error!';
+  content: "Error!";
   color: #f66;
 }
 
 .contener {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 90%;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  margin: auto;
+  width: 85vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .contener > .magnify {
@@ -70,7 +72,8 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  margin: 30px;
+  height: 100%;
+  margin: auto;
 }
 
 .test {
