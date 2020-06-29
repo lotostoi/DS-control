@@ -83,3 +83,13 @@ body {
   z-index: 5;
   // background-color: green;
 }
+
+.text {
+  display: flex;
+  margin: auto;
+  font-family:Arial, Helvetica, sans-serif;
+  color: white;
+  font-weight: 600;
+  font-size: 60px;
+  letter-spacing: 10px;
+}

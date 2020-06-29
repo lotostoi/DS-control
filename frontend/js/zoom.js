@@ -3,44 +3,16 @@ window.onload = () => {
 
     let socket = io.connect();
 
-    let mousemove = true
-
-    let mous = `<div class='mous'>                                                                     
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40px" height="40px"><path fill="#dff0fe" d="M17.708 24.645L10.5 30.556 10.5 2.173 30.899 21.749 21.679 22.932 27.505 36.627 23.534 38.342z"/><path fill="#4788c7" d="M11,3.346l18.799,18.04l-7.529,0.966l-1.31,0.168l0.517,1.215l5.373,12.63l-3.052,1.318 l-5.369-12.62l-0.522-1.228l-1.032,0.846L11,29.499V3.346 M10,1v30.612l7.509-6.157L23.271,39l4.889-2.111l-5.762-13.545L32,22.112 L10,1L10,1z"/></svg>
-                </div>`
-    d.querySelector('body').innerHTML += mous
-
-    mous = d.querySelector('.mous')
-
     let initialized = [];
 
-    let numCon
-
-    socket.on('sendid', (data)=>{
-        numCon = data.numCon
-        console.log(numCon)
-        if (numCon>1) {
-            d.querySelector('.zoom').setAttribute('src',"./frontend/img/touch_control.jpg")
-        }
-    })
   
-
-
     function Magnify(el, opts, i) {
-        let anchor;
         if (!~initialized.indexOf(el)) {
             initialized.push(el);
 
             this.opts = opts;
             this.image = anchor = el;
 
-            // Detect closest anchor
-            while (anchor) {
-                if (anchor.tagName === 'A') {
-                    break;
-                }
-                anchor = anchor.parentElement;
-            }
             this.alter = el.getAttribute('data-magnify-src')
                 || (anchor && anchor.getAttribute('href'))
                 || opts.src
@@ -323,49 +295,9 @@ window.onload = () => {
             }
         }
     };
-
-
     magnify(d.querySelectorAll('.zoom'),
         {
             speed: 100,
         }
     );
-
-
-    d.querySelector('#test').addEventListener('click', (e) => {
-        socket.emit('clickTest', e.target.id)
-
-    })
-
-
-
-    socket.on('kk', (data) => {
-        d.querySelector(`#${data.id}`).classList.toggle('test')
-    })
-
-    if (mousemove) {
-        d.querySelector('body').addEventListener('mousemove', (e) => {
-
-            socket.emit('mous active', { x: e.pageX, y: e.pageY })
-        })
-
-        socket.on('sendMous', (data) => {
-            if (socket.id != data.id) {
-
-                if (d.querySelector('.mous')) {
-
-                    d.querySelector('.mous').style.left = `${data.cor.x - 10}px`
-                    d.querySelector('.mous').style.top = `${data.cor.y - 10}px`
-                }
-            }
-            else {
-                if (mous) {
-                    mous.style.opacity = 0;
-                }
-
-            }
-        })
-
-    }
-
 }

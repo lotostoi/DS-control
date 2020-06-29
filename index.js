@@ -5,8 +5,11 @@ let server = require('http').createServer(express)
 
 let io = require('socket.io').listen(server)
 
-server.listen(port)
-console.log(`Приложение запущенно на - http://localhost:${port}/`)
+server.listen(port, () => {
+    console.log(`Главный экран - http://localhost:${port}/`)
+    console.log(`Управялющий экран - http://localhost:${port}/control`)
+})
+
 
 
 express.get('*', (request, respons) => {
@@ -14,6 +17,9 @@ express.get('*', (request, respons) => {
     if (request.path.search(/.jpg/) == -1) {
         if (request.path == '/') {
             respons.sendFile(__dirname + '/frontend/index.html')
+
+        } else if (request.path == '/control') {
+            respons.sendFile(__dirname + '/frontend/control.html')
         } else {
             respons.set('Content-Type', 'text/css');
             respons.sendFile(__dirname + request.path)
@@ -30,11 +36,11 @@ let connections = [],
 
 
 io.sockets.on('connection', function (socket) {
-    console.log(socket.id)
+
     numcon++
     connections.push(socket.id)
-    console.log(numcon)
-   io.sockets.emit('sendid', { numCon: numcon })
+   
+    io.sockets.emit('sendid', { numCon: numcon, connections: connections, id: socket.id })
 
 
 
