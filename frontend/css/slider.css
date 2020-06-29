@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
+
+@-webkit-keyframes slide_right {
+  from {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  1% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    z-index: 30;
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide_right {
+  from {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  1% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    z-index: 30;
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide_left {
+  from {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  1% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    z-index: 30;
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide_left {
+  from {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  1% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    z-index: 30;
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+
+.wrepper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.wrepper > .slide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.wrepper > .slide > img {
+  width: 100%;
+  height: 100%;
+}
+
+.wrepper > .next {
+  position: absolute;
+  right: 30px;
+  top: 48%;
+  z-index: 100;
+}
+
+.wrepper > .next > img {
+  width: 50px;
+  height: 50px;
+}
+
+.wrepper > .back {
+  position: absolute;
+  left: 30px;
+  top: 48%;
+  z-index: 100;
+}
+
+.wrepper > .back > img {
+  width: 60px;
+  height: 60px;
+}
+
+.right {
+  -webkit-animation: slide_right 1s;
+  animation: slide_right 1s;
+}
+
+.left {
+  -webkit-animation: slide_left 1s;
+  animation: slide_left 1s;
+}
+/*# sourceMappingURL=slider.css.map */
