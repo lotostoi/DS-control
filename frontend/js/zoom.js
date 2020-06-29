@@ -13,6 +13,7 @@ class Slider {
     }
     _handler() {
         document.querySelector('body').addEventListener('click', e => {
+            e.preventDefault()
             if (e.target.parentNode.className == this.next.className) {
                 if (++this.currentVal > this.list.length - 1) {
                     this.currentVal = 0
@@ -27,28 +28,52 @@ class Slider {
             }
         })
 
-        document.addEventListener('touchstart', e => {
-            event = e;
+        let start = null, finish = null
+
+        document.querySelector('body').addEventListener('touchstart', (e) => {
+            //e.preventDefault()
+            if (e.pointerType == "touch" && !e.isPrimary) {
+                return
+            }
+            start = e;
         })
 
 
-        document.addEventListener('touchmove', e => {
-            if (event) {
-                if (event.touches[0].pageX < e.touches[0].pageX) {
+        document.querySelector('body').addEventListener('touchmove', (e) => {
+            // e.preventDefault()
+            if (e.pointerType == "touch" && !e.isPrimary) {
+                return
+            }
+
+            finish = e
+            
+
+        })
+
+
+        document.querySelector('body').addEventListener("touchend", (e) => {
+            e.preventDefault()
+            if (e.pointerType == "touch" && !e.isPrimary) {
+                return
+            }
+            console.log(start + " " + finish)
+            if (start && finish) {
+                if (start.touches[0].pageX < finish.touches[0].pageX) {
                     if (++this.currentVal > this.list.length - 1) {
                         this.currentVal = 0
                     } this._next(this.currentVal)
+
                 } else {
                     if (--this.currentVal < 0) {
                         this.currentVal = this.list.length - 1
                     } this._back(this.currentVal)
-                    document.addEventListener("touched", function (e) {
-                        event = null;
-                    });
+
                 }
             }
-        })
+            // event = null;
+        });
     }
+
     _addDataId() {
         this.list.forEach((e, i) => {
             e.setAttribute('data-id', i)
