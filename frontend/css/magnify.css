@@ -88,6 +88,110 @@ body {
   z-index: 5;
 }
 
+.mous body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.mous .magnify {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 40%;
+}
+
+.mous .magnify img {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+}
+
+.mous .magnify-lens {
+  position: absolute;
+  z-index: 100;
+  width: 300%;
+  height: 300%;
+  -webkit-box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transition: opacity;
+  transition: opacity;
+}
+
+.mous .magnify-loading,
+.mous .magnify-error {
+  background: rgba(51, 51, 51, 0.75) !important;
+}
+
+.mous .magnify-loading:before,
+.mous .magnify-error:before {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.25em;
+  line-height: 1;
+  text-shadow: 0 0 2px rgba(51, 51, 51, 0.8);
+  text-transform: none;
+}
+
+.mous .magnify-loading:before {
+  content: "Loading...";
+  color: #fff;
+}
+
+.mous .magnify-error:before {
+  content: "Error!";
+  color: #f66;
+}
+
+.mous .contener {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mous .contener > .magnify {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+.mous .test {
+  background-color: red;
+}
+
+.mous .mous {
+  position: absolute;
+  pointer-events: none;
+  width: 24px;
+  height: 24px;
+  z-index: 5;
+}
+
+.mous .text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-weight: 600;
+  font-size: 60px;
+  letter-spacing: 10px;
+}
+
 .text {
   display: -webkit-box;
   display: -ms-flexbox;
