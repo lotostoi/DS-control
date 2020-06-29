@@ -1,279 +1,110 @@
-window.onload = () => {
-    let d = document
 
-    let socket = io.connect();
 
-    let initialized = [];
+let d = document
 
-  
-    function Magnify(el, opts, i) {
-        if (!~initialized.indexOf(el)) {
-            initialized.push(el);
-
-            this.opts = opts;
-            this.image = anchor = el;
-
-            this.alter = el.getAttribute('data-magnify-src')
-                || (anchor && anchor.getAttribute('href'))
-                || opts.src
-                || '';
-
-            this.wrap(i);
-
-            this.zoom(i);
-        }
+class Slider {
+    constructor(el, back, next) {
+        this.el = el;
+        this.list = document.querySelectorAll(`${el}`)
+        this.back = document.querySelector(`${back}`)
+        this.next = document.querySelector(`${next}`)
+        this.currentVal = 0
+        this.befotVal = this.list.length + 1
+        this._handler()
+        this._addDataId()
     }
 
-    Magnify.prototype = {
-        wrap: function (i) {
-            let inst = this,
-                image = inst.image,
-                container, lens;
+    _handler() {
 
-            container = document.createElement('div');
-            container.className = 'magnify';
-            container.setAttribute('data-id', i);
 
-            lens = document.createElement('div');
-            lens.className = 'magnify-lens magnify-loading';
-            lens.setAttribute('data-lens', i);
-            lens.style.transitionDuration = inst.opts.speed + 'ms';
-            lens.style.webkitTransitionDuration = inst.opts.speed + 'ms';
 
-            // Append
-            container.appendChild(lens);
-            image.parentNode.insertBefore(container, image);
-            container.appendChild(image);
+        document.querySelector('body').addEventListener('click', e => {
 
-            inst.container = container;
-            inst.lens = lens;
+            if (e.target.parentNode.className == this.next.className) {
 
-        },
 
-        zoom: function (i) {
-            let inst = this,
-                container = inst.container,
-                lens = null,
-                img = inst.image,
-                mImg = new Image(),
-                loaded = false,
-                errored = false,
-                mous = d.querySelector('.mous')
-
-            container.addEventListener('mouseover', function (e) {
-
-                socket.emit('mouseover_soket', container.dataset.id)
-
-            });
-            container.addEventListener('touchstart', function (e) {
-                if (e.pointerType == "touch" && !e.isPrimary) {
-                    return
+                if (++this.currentVal > this.list.length - 1) {
+                    this.currentVal = 0
                 }
-                socket.emit('touchstart_soket', container.dataset.id)
 
-            });
+                this._next(this.currentVal)
 
-            socket.on('touchstart_soket_server', (data) => {
-                e.preventDefault()
-                if (socket.id != data.id) {
-                    if (!errored) {
-                        mImg.src = inst.alter;
+            }
+            if (e.target.parentNode.className == this.back.className) {
+
+                if (--this.currentVal < 0) {
+                    this.currentVal = this.list.length - 1
+                }
+                this._back(this.currentVal)
+
+            }
+        })
+
+        let event = null;
+
+        document.addEventListener('touchstart', e => {
+            event = e;
+        })
+
+        document.addEventListener('touchmove', e => {
+            if (event) {
+
+                if (event.touches[0].pageX < e.touches[0].pageX) {
+                    if (++this.currentVal > this.list.length - 1) {
+                        this.currentVal = 0
                     }
-                    lens = d.querySelector(`div[data-lens = "${data.data}"]`)
-                    lens.style.opacity = 1; 
-                } 
-            })
-            socket.on('mouseover_soket_server', (data) => {     
-                if (socket.id != data.id) {
-                    if (!errored) {
-                        mImg.src = inst.alter;
+
+                    this._next(this.currentVal)
+                }
+
+                else {
+
+                    if (--this.currentVal < 0) {
+                        this.currentVal = this.list.length - 1
                     }
-                    lens = d.querySelector(`div[data-lens = "${data.data}"]`)
-                    lens.style.opacity = 1; 
-                } 
-            })
-
-            container.addEventListener('mouseleave', function (e) {
-
-                socket.emit('mouseleave_soket', container.dataset.id)
-            });
-
-            container.addEventListener('touchend', function (e) {
-                e.preventDefault()
-                if (e.pointerType == "touch" && !e.isPrimary) {
-                    return
+                    this._back(this.currentVal)
                 }
-                socket.emit('touchend_soket', container.dataset.id)
-            });
 
-
-            socket.on('mouseleave_soket_server', (data) => {
-                if (socket.id != data.id) {
-                    lens.style.opacity = 0;
-                }
-            })
-
-            socket.on('touchend_soket_server', (data) => {
-                if (socket.id != data.id) {
-                    lens.style.opacity = 0;
-                }
-            })
-
-            container.addEventListener('mousemove', function (e) {
-                let box = d.querySelector(`div[data-id = "${i}"]`).getBoundingClientRect(),
-                    clientX = e.clientX
-                    clientY = e.clientY
-          
-                socket.emit('mousemove_soket', {
-                    box: box,
-                    clientX: clientX,
-                    clientY: clientY,
-                    vueportW: d.body.clientWidth,
-                    vueportH: d.body.clientHeight,
-                })
-            })
-
-            // Graceful degradation
-            socket.on('mousemove_soket_server', (data) => {
-                if (socket.id != data.id) {
-                    let box = d.querySelector(`div[data-id = "${i}"]`).getBoundingClientRect(),
-
-                        kw = d.body.clientWidth / data.data.vueportW,
-                        kh = d.body.clientHeight / data.data.vueportH,
-
-                        clientX = data.data.clientX * kw,
-                        clientY = data.data.clientY * kh;
-
-        
-                    // Will always true with pointer-events: none
-                    if (clientX > box.left && box.right > clientX && clientY > box.top && box.bottom > clientY) {
-                        calc(clientX, clientY, box.left, box.top)
-                        // show
-                        lens.style.opacity = 1;
-                        // container.style.overflow = '';
-                    } else {
-                        // hide
-                        lens.style.opacity = 0;
-                        //  container.style.overflow = 'hidden';
-                    }
-                }
-            })
-
-            container.addEventListener('touchmove', function (e) {
-                e.preventDefault()
-                if (e.pointerType == "touch" && !e.isPrimary) {
-                    return
-                }
-              
-                let box = d.querySelector(`div[data-id = "${i}"]`).getBoundingClientRect(),
-                    clientX = e.touches[0].clientX,
-                    clientY = e.touches[0].clientY;
-         
-                socket.emit('touchmove_soket', {
-                    box: box,
-                    clientX: clientX,
-                    clientY: clientY,
-                    vueportW: d.body.clientWidth,
-                    vueportH: d.body.clientHeight,
-                    i: i
-                })
-
-
-            })
-
-            // Graceful degradation
-            socket.on('touchmove_soket_server', (data) => {
-
-                if (socket.id != data.id) {
-                    let box = d.querySelector(`div[data-id = "${data.data.i}"]`).getBoundingClientRect(),
-                        clientX = data.data.clientX * d.body.clientWidth / data.data.vueportW,
-                        clientY = data.data.clientY * d.body.clientHeight / data.data.vueportH;
-                  
-           
-                    // Will always true with pointer-events: none
-                    if (clientX > box.left && box.right > clientX && clientY > box.top && box.bottom > clientY) {
-                        calc(clientX, clientY, box.left, box.top)
-                        // show
-                        lens.style.opacity = 1;
-                        // container.style.overflow = '';
-                    } else {
-                        // hide
-                        lens.style.opacity = 0;
-                        //  container.style.overflow = 'hidden';
-                    }
-                } 
-            })
-
-            function calc(clientX, clientY, left, top) {
-                let x, y, lhw, lhh, rx, ry;
-                // coords
-                x = clientX - left;
-                y = clientY - top;
-                // lens half
-                lhw = lens.offsetWidth / 2
-                lhh = lens.offsetHeight / 2
-                // lens pos
-                lens.style.left = x - lhw + 'px';
-                lens.style.top = y - lhh + 'px';
-                // ratio
-                if (loaded) {
-                    rx = Math.round(x / img.width * mImg.width - lhw) * -1;
-                    ry = Math.round(y / img.height * mImg.height - lhh) * -1;
-                    lens.style.backgroundPosition = rx + 'px ' + ry + 'px';
-                }
             }
 
-            mImg.addEventListener('load', function () {
-                socket.emit('load_soket')
-            });
+        })
+        document.addEventListener("touched", function (e) {
+            event = null;
+        });
 
-            socket.on('load_soket_server', (data) => {
-                if (socket.id != data.id) {
-                    loaded = true;
-                    if (lens) {
-                        lens.className = 'magnify-lens';
-                        lens.style.background = 'url(' + inst.alter + ') no-repeat';
-                    }
-                }
-            })
 
-            mImg.addEventListener('error', function () {
-                errored = true;
-                lens.className = 'magnify-lens magnify-error';
-            });
-        }
-    };
+    }
+    _addDataId() {
+        this.list.forEach((e, i) => {
+            e.setAttribute('data-id', i)
+        })
+    }
+    _setZindex() {
+        this.list.forEach((e, i) => {
+            e.style.zIndex = '10'
+            e.classList.remove('right')
+            e.classList.remove('left')
+        })
+    }
 
-    window.magnify = function (el, opts) {
-        let i;
 
-        if (typeof el === 'string') {
-            el = d.querySelectorAll(el);
-        } else if (typeof el === 'object' && el.nodeType) {
-            el = [el];
-        } else if (!el.length) {
-            el = [];
-        }
+    _next(id) {
+        let el = document.querySelector(`div[data-id="${id}"]`)
+        this._setZindex()
+        el.classList.add('right')
+        el.style.zIndex = '30'
+    }
+    _back(id) {
+        let el = document.querySelector(`div[data-id="${id}"]`)
+        this._setZindex()
+        el.classList.add('left')
+        el.style.zIndex = '30'
+    }
+}
 
-        // Options
-        if (typeof opts !== 'object') {
-            opts = {};
-        }
-        opts.src = opts.src || '';
-        opts.speed = opts.speed || 200;
 
-        // Iterator
-        if (el.length) {
-            for (i = el.length - 1; i != -1; i -= 1) {
-                if (el[i].nodeType) {
-                    new Magnify(el[i], opts, i)
-                }
-            }
-        }
-    };
-    magnify(d.querySelectorAll('.zoom'),
-        {
-            speed: 100,
-        }
-    );
+window.onload = () => {
+
+    new Slider('.slide', '.back', '.next')
+
 }
