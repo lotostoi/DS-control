@@ -75,30 +75,22 @@ window.onload = () => {
 
             socket.on('touchstart_soket_server', (data) => {
                 e.preventDefault()
-                if (!errored) {
-                    mImg.src = inst.alter;
-                }
                 if (socket.id != data.id) {
+                    if (!errored) {
+                        mImg.src = inst.alter;
+                    }
                     lens = d.querySelector(`div[data-lens = "${data.data}"]`)
-                    lens.style.opacity = 1;
-                    mousemove = false
-                    mous.style.opacity = 0
-                } else {
-                    mous.style.opacity = 0;
-                }
+                    lens.style.opacity = 1; 
+                } 
             })
-            socket.on('mouseover_soket_server', (data) => {
-                if (!errored) {
-                    mImg.src = inst.alter;
-                }
+            socket.on('mouseover_soket_server', (data) => {     
                 if (socket.id != data.id) {
+                    if (!errored) {
+                        mImg.src = inst.alter;
+                    }
                     lens = d.querySelector(`div[data-lens = "${data.data}"]`)
-                    lens.style.opacity = 1;
-                    mousemove = false
-                    mous.style.opacity = 0
-                } else {
-                    mous.style.opacity = 0;
-                }
+                    lens.style.opacity = 1; 
+                } 
             })
 
             container.addEventListener('mouseleave', function (e) {
@@ -111,7 +103,6 @@ window.onload = () => {
                 if (e.pointerType == "touch" && !e.isPrimary) {
                     return
                 }
-
                 socket.emit('touchend_soket', container.dataset.id)
             });
 
@@ -119,23 +110,13 @@ window.onload = () => {
             socket.on('mouseleave_soket_server', (data) => {
                 if (socket.id != data.id) {
                     lens.style.opacity = 0;
-                    mousemove = true
-                    mous.style.opacity = 1
-                } else {
-                    mous.style.opacity = 0;
                 }
-
             })
 
             socket.on('touchend_soket_server', (data) => {
                 if (socket.id != data.id) {
                     lens.style.opacity = 0;
-                    mousemove = true
-                    mous.style.opacity = 1
-                } else {
-                    mous.style.opacity = 0;
                 }
-
             })
 
             container.addEventListener('mousemove', function (e) {
@@ -175,8 +156,6 @@ window.onload = () => {
                         lens.style.opacity = 0;
                         //  container.style.overflow = 'hidden';
                     }
-                } else {
-                    mous.style.opacity = 0;
                 }
             })
 
@@ -222,9 +201,7 @@ window.onload = () => {
                         lens.style.opacity = 0;
                         //  container.style.overflow = 'hidden';
                     }
-                } else {
-                    mous.style.opacity = 0;
-                }
+                } 
             })
 
             function calc(clientX, clientY, left, top) {
@@ -257,7 +234,6 @@ window.onload = () => {
                         lens.className = 'magnify-lens';
                         lens.style.background = 'url(' + inst.alter + ') no-repeat';
                     }
-
                 }
             })
 
