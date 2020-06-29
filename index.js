@@ -25,27 +25,33 @@ express.get('*', (request, respons) => {
     }
 })
 
+let connections = [],
+    numcon = 0;
 
 
 io.sockets.on('connection', function (socket) {
     console.log(socket.id)
+    numcon++
+    connections.push(socket.id)
+    console.log(numcon)
+   io.sockets.emit('sendid', { numCon: numcon })
+
+
 
     socket.on('clickTest', (data) => {
-     
         io.sockets.emit('kk', { id: data })
     })
 
-   
+
     socket.on('mous active', (data) => {
-       
-        io.sockets.emit('sendMous', { id:socket.id , cor: data })
+
+        io.sockets.emit('sendMous', { id: socket.id, cor: data })
     })
 
     // события лупы
 
     socket.on('mouseover_soket', (data) => {
-      
-        io.sockets.emit('mouseover_soket_server', { id: socket.id, data: data  })
+        io.sockets.emit('mouseover_soket_server', { id: socket.id, data: data })
     })
 
     socket.on('mouseleave_soket', (data) => {
@@ -53,7 +59,7 @@ io.sockets.on('connection', function (socket) {
     })
 
     socket.on('mousemove_soket', (data) => {
-      
+
         io.sockets.emit('mousemove_soket_server', { id: socket.id, data: data })
     })
     socket.on('load_soket', (data) => {
@@ -72,7 +78,7 @@ io.sockets.on('connection', function (socket) {
         io.sockets.emit('touchend_soket_server', { id: socket.id, data: data })
     })
 
-    socket.on('touchmove_soket', (data) => {    
+    socket.on('touchmove_soket', (data) => {
 
         io.sockets.emit('touchmove_soket_server', { id: socket.id, data: data })
 
