@@ -7,17 +7,17 @@ class Slider {
         this.back = document.querySelector(`${back}`)
         this.next = document.querySelector(`${next}`)
         this.currentVal = 0
-        this.befotVal = 0
+        this.befoVal = 0
         this.cl_right = 'right'
         this.cl_left = 'left'
         this._handler()
         this._addDataId()
-        // this.list[this.currentVal].style.opacity = 1 
+        
     }
     _handler() {
         document.documentElement.addEventListener('click', e => {
             e.preventDefault()
-            this.befotVal=this.currentVal
+            this.befoVal=this.currentVal
             if (e.target.parentNode.className == this.next.className) {
                 if (++this.currentVal > this.list.length - 1) {
                     this.currentVal = 0      
@@ -37,7 +37,7 @@ class Slider {
         let start = null, finish = null
 
         document.documentElement.addEventListener('touchstart', (e) => {
-            //e.preventDefault()
+           
             if (e.pointerType == "touch" && !e.isPrimary) {
                 return
             }
@@ -46,7 +46,7 @@ class Slider {
 
 
         document.documentElement.addEventListener('touchmove', (e) => {
-            // e.preventDefault()
+            
             if (e.pointerType == "touch" && !e.isPrimary) {
                 return
             }
@@ -58,13 +58,13 @@ class Slider {
 
 
         document.documentElement.addEventListener("touchend", (e) => {
-           // e.preventDefault()
+         
             if (e.pointerType == "touch" && !e.isPrimary) {
                 return
             }
-         //   console.log(start + " " + finish)
+        
             if (start && finish) {
-                this.befotVal=this.currentVal
+                this.befoVal=this.currentVal
                 if (start.touches[0].pageX < finish.touches[0].pageX) {
                    
                     if (++this.currentVal > this.list.length - 1) {
@@ -81,7 +81,7 @@ class Slider {
 
                 }
             }
-            // event = null;
+            
         });
     }
 
@@ -95,8 +95,8 @@ class Slider {
       
         d.querySelector(`div[data-id="${this.currentVal}"]`).classList.add(cl)
         setTimeout(()=>{
-            d.querySelector(`div[data-id="${this.befotVal}"]`).classList.remove('right')
-            d.querySelector(`div[data-id="${this.befotVal}"]`).classList.remove('left')
+            d.querySelector(`div[data-id="${this.befoVal}"]`).classList.remove('right')
+            d.querySelector(`div[data-id="${this.befoVal}"]`).classList.remove('left')
          
         }, 1100) 
        
