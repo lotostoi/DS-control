@@ -41,7 +41,8 @@ class Slider {
             if (e.pointerType == "touch" && !e.isPrimary) {
                 return
             }
-            start = e;
+            
+            socket.emit('touchstart_soket', e)
         })
 
 
