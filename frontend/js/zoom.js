@@ -94,11 +94,11 @@ class Slider {
   
       
         d.querySelector(`div[data-id="${this.currentVal}"]`).classList.add(cl)
-        setTimeout(()=>{
+         setTimeout(()=>{
             d.querySelector(`div[data-id="${this.befoVal}"]`).classList.remove('right')
             d.querySelector(`div[data-id="${this.befoVal}"]`).classList.remove('left')
          
-        }, 1100) 
+        }, 1)  
        
 
     }
