@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -10,82 +9,47 @@ body {
   height: 100vh;
 }
 
-@-webkit-keyframes slide_right {
-  from {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-  }
-  1% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-    z-index: 30;
-  }
-  100% {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
-  }
-}
-
 @keyframes slide_right {
   from {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(-100%);
+    opacity: 0;
   }
   1% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-    z-index: 30;
-  }
-  100% {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
-  }
-}
+    transform: translateX(-100%);
 
-@-webkit-keyframes slide_left {
-  from {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-  }
-  1% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-    z-index: 30;
+    opacity: 1;
   }
   100% {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
+    transform: translateX(0%);
+    opacity: 1;
   }
 }
 
 @keyframes slide_left {
   from {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
+    transform: translateX(100%);
+    opacity: 0;
   }
   1% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-    z-index: 30;
+    transform: translateX(100%);
+
+    opacity: 1;
   }
   100% {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
+    transform: translateX(0%);
+    opacity: 1;
   }
 }
 
 .wrepper {
   width: 100%;
   height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   position: relative;
 }
 
 .wrepper > .slide {
-  display: -webkit-box;
-  display: -ms-flexbox;
+  opacity: 0;
   display: flex;
   width: 100%;
   height: 100%;
@@ -93,6 +57,7 @@ body {
   top: 0;
   left: 0;
   z-index: 10;
+  transition: opacity 0.1s 1s;
 }
 
 .wrepper > .slide > img {
@@ -125,11 +90,16 @@ body {
 }
 
 .right {
-  -webkit-animation: slide_right 1s;
-          animation: slide_right 1s;
+  animation: slide_right 0.5s;
+  opacity: 1 !important;
+  z-index: 40 !important;
 }
 
 .left {
-  -webkit-animation: slide_left 1s;
-          animation: slide_left 1s;
+  animation: slide_left 0.5s;
+  opacity: 1 !important;
+  z-index: 40 !important;
+}
+.zIndex {
+  z-index: 30 !important;
 }
