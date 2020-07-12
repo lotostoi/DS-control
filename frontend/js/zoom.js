@@ -121,8 +121,8 @@ window.onload = () => {
 
             container.addEventListener('mousemove', function (e) {
                 let box = d.querySelector(`div[data-id = "${i}"]`).getBoundingClientRect(),
-                    clientX = e.clientX
-                    clientY = e.clientY
+                    clientX = e.clientX - 10,
+                    clientY = e.clientY - 10;
           
                 socket.emit('mousemove_soket', {
                     box: box,
@@ -166,8 +166,8 @@ window.onload = () => {
                 }
               
                 let box = d.querySelector(`div[data-id = "${i}"]`).getBoundingClientRect(),
-                    clientX = e.touches[0].clientX,
-                    clientY = e.touches[0].clientY;
+                    clientX = e.touches[0].clientX - 10,
+                    clientY = e.touches[0].clientY - 10;
          
                 socket.emit('touchmove_soket', {
                     box: box,
