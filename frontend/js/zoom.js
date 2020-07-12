@@ -66,6 +66,7 @@ window.onload = () => {
 
             });
             container.addEventListener('touchstart', function (e) {
+                e.preventDefault()
                 if (e.pointerType == "touch" && !e.isPrimary) {
                     return
                 }
@@ -74,23 +75,22 @@ window.onload = () => {
             });
 
             socket.on('touchstart_soket_server', (data) => {
-             //   e.preventDefault()
-             /*    if (socket.id != data.id) { */
+            
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
-                 //   lens = d.querySelector(`div[data-lens = "${data.data}"]`)
+               
                     lens.style.opacity = 1; 
-              /*   }  */
+             
             })
             socket.on('mouseover_soket_server', (data) => {     
-                /* if (socket.id != data.id) { */
+              
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
-                 //   lens = d.querySelector(`div[data-lens = "${data.data}"]`)
+                
                     lens.style.opacity = 1; 
-              /*   }  */
+             
             })
 
             container.addEventListener('mouseleave', function (e) {
@@ -108,15 +108,15 @@ window.onload = () => {
 
 
             socket.on('mouseleave_soket_server', (data) => {
-                if (socket.id != data.id) {
+                
                     lens.style.opacity = 0;
-                }
+             
             })
 
             socket.on('touchend_soket_server', (data) => {
-                if (socket.id != data.id) {
+    
                     lens.style.opacity = 0;
-                }
+                
             })
 
             container.addEventListener('mousemove', function (e) {
@@ -135,7 +135,7 @@ window.onload = () => {
 
             // Graceful degradation
             socket.on('mousemove_soket_server', (data) => {
-                if (socket.id != data.id) {
+                
                     let box = d.querySelector(`div[data-id = "${i}"]`).getBoundingClientRect(),
 
                         kw = d.body.clientWidth / data.data.vueportW,
@@ -156,7 +156,7 @@ window.onload = () => {
                         lens.style.opacity = 0;
                         //  container.style.overflow = 'hidden';
                     }
-                }
+               
             })
 
             container.addEventListener('touchmove', function (e) {
@@ -184,7 +184,7 @@ window.onload = () => {
             // Graceful degradation
             socket.on('touchmove_soket_server', (data) => {
 
-                if (socket.id != data.id) {
+               
                     let box = d.querySelector(`div[data-id = "${data.data.i}"]`).getBoundingClientRect(),
                         clientX = data.data.clientX * d.body.clientWidth / data.data.vueportW,
                         clientY = data.data.clientY * d.body.clientHeight / data.data.vueportH;
@@ -201,7 +201,7 @@ window.onload = () => {
                         lens.style.opacity = 0;
                         //  container.style.overflow = 'hidden';
                     }
-                } 
+                
             })
 
             function calc(clientX, clientY, left, top) {
