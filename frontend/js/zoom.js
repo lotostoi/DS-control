@@ -233,13 +233,13 @@ window.onload = () => {
             });
 
             socket.on('load_soket_server', (data) => {
-                if (socket.id != data.id) {
+               // if (socket.id != data.id) {
                     loaded = true;
                     if (lens) {
                         lens.className = 'magnify-lens';
                         lens.style.background = 'url(' + inst.alter + ') no-repeat';
                     }
-                }
+               // }
             })
 
             mImg.addEventListener('error', function () {
