@@ -88,9 +88,9 @@ window.onload = () => {
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
-                
-                    lens.style.opacity = 1; 
-             
+                    if (socket.id != data.id) {
+                    lens.style.opacity = 0; 
+                    }
             })
 
             container.addEventListener('mouseleave', function (e) {
