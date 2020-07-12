@@ -109,15 +109,15 @@ window.onload = () => {
 
 
             socket.on('mouseleave_soket_server', (data) => {
-
-                lens.style.opacity = 0;
-
+                if (socket.id != data.id) {
+                    lens.style.opacity = 0;
+                }
             })
 
             socket.on('touchend_soket_server', (data) => {
-
-                lens.style.opacity = 0;
-
+                if (socket.id != data.id) {
+                    lens.style.opacity = 0;
+                }
             })
 
             container.addEventListener('mousemove', function (e) {
@@ -150,7 +150,9 @@ window.onload = () => {
                 if (clientX > box.left && box.right > clientX && clientY > box.top && box.bottom > clientY) {
                     calc(clientX, clientY, box.left, box.top)
                     // show
-                    lens.style.opacity = 1;
+                    if (socket.id != data.id) {
+                        lens.style.opacity = 1;
+                    }
                     // container.style.overflow = '';
                 } else {
                     // hide
@@ -195,7 +197,9 @@ window.onload = () => {
                 if (clientX > box.left && box.right > clientX && clientY > box.top && box.bottom > clientY) {
                     calc(clientX, clientY, box.left, box.top)
                     // show
-                    lens.style.opacity = 1;
+                    if (socket.id != data.id) {
+                        lens.style.opacity = 1;
+                    }
                     // container.style.overflow = '';
                 } else {
                     // hide
@@ -229,13 +233,13 @@ window.onload = () => {
             });
 
             socket.on('load_soket_server', (data) => {
-                // if (socket.id != data.id) {
-                loaded = true;
-                if (lens) {
-                    lens.className = 'magnify-lens';
-                    lens.style.background = 'url(' + inst.alter + ') no-repeat';
+                if (socket.id != data.id) {
+                    loaded = true;
+                    if (lens) {
+                        lens.className = 'magnify-lens';
+                        lens.style.background = 'url(' + inst.alter + ') no-repeat';
+                    }
                 }
-                // }
             })
 
             mImg.addEventListener('error', function () {
