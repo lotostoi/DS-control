@@ -75,22 +75,22 @@ window.onload = () => {
 
             socket.on('touchstart_soket_server', (data) => {
              //   e.preventDefault()
-                if (socket.id != data.id) {
+             /*    if (socket.id != data.id) { */
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
                  //   lens = d.querySelector(`div[data-lens = "${data.data}"]`)
                     lens.style.opacity = 1; 
-                } 
+              /*   }  */
             })
             socket.on('mouseover_soket_server', (data) => {     
-                if (socket.id != data.id) {
+                /* if (socket.id != data.id) { */
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
                  //   lens = d.querySelector(`div[data-lens = "${data.data}"]`)
                     lens.style.opacity = 1; 
-                } 
+              /*   }  */
             })
 
             container.addEventListener('mouseleave', function (e) {
