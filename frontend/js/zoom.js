@@ -53,7 +53,7 @@ window.onload = () => {
         zoom: function (i) {
             let inst = this,
                 container = inst.container,
-                lens = null,
+                lens = this.lens,
                 img = inst.image,
                 mImg = new Image(),
                 loaded = false,
@@ -74,12 +74,12 @@ window.onload = () => {
             });
 
             socket.on('touchstart_soket_server', (data) => {
-                e.preventDefault()
+             //   e.preventDefault()
                 if (socket.id != data.id) {
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
-                    lens = d.querySelector(`div[data-lens = "${data.data}"]`)
+                 //   lens = d.querySelector(`div[data-lens = "${data.data}"]`)
                     lens.style.opacity = 1; 
                 } 
             })
@@ -88,7 +88,7 @@ window.onload = () => {
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
-                    lens = d.querySelector(`div[data-lens = "${data.data}"]`)
+                 //   lens = d.querySelector(`div[data-lens = "${data.data}"]`)
                     lens.style.opacity = 1; 
                 } 
             })
