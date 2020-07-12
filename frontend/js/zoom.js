@@ -79,9 +79,9 @@ window.onload = () => {
                     if (!errored) {
                         mImg.src = inst.alter;
                     }
-               
+                    if (socket.id != data.id) {
                     lens.style.opacity = 1; 
-             
+                    }
             })
             socket.on('mouseover_soket_server', (data) => {     
               
@@ -114,9 +114,9 @@ window.onload = () => {
             })
 
             socket.on('touchend_soket_server', (data) => {
-    
+                if (socket.id != data.id) {
                     lens.style.opacity = 0;
-                
+                }
             })
 
             container.addEventListener('mousemove', function (e) {
