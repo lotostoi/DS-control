@@ -38,7 +38,7 @@ var vueTouchEvents = {
         var globalOptions = Object.assign({}, {
             disableClick: false,
             tapTolerance: 10,  // px
-            swipeTolerance: 30,  // px
+            swipeTolerance: 50,  // px
             touchHoldTolerance: 400,  // ms
             longTapTimeInterval: 400,  // ms
             touchClass: ''
