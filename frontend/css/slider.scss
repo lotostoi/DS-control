@@ -3,6 +3,8 @@
   padding: 0;
 }
 
+$length: 95%;
+
 body {
   overflow: hidden;
   width: 100%;
@@ -22,11 +24,11 @@ body {
 @keyframes comeLeft {
   from {
     opacity: 0;
-    transform: translateX(-90%);
+    transform: translateX(-$length);
   }
   1% {
     opacity: 1;
-    transform: translateX(-90%);
+    transform: translateX(-$length);
   }
   to {
     opacity: 1;
@@ -40,21 +42,21 @@ body {
   }
   99% {
     opacity: 1;
-    transform: translateX(90%);
+    transform: translateX($length);
   }
   to {
     opacity: 0;
-    transform: translateX(90%);
+    transform: translateX($length);
   }
 }
 @keyframes comeRight {
   from {
     opacity: 0;
-    transform: translateX(90%);
+    transform: translateX($length);
   }
   1% {
     opacity: 1;
-    transform: translateX(90%);
+    transform: translateX($length);
   }
   to {
     opacity: 1;
@@ -68,11 +70,11 @@ body {
   }
   99% {
     opacity: 1;
-    transform: translateX(-90%);
+    transform: translateX(-$length);
   }
   to {
     opacity: 0;
-    transform: translateX(-90%);
+    transform: translateX(-$length);
   }
 }
 

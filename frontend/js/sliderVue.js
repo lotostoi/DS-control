@@ -1,10 +1,8 @@
 
-
-
 new Vue({
     el: '#slider',
     data: {
-        soket: io.connect(),
+        socket: io.connect(),
         pictures: [],
         currentSlide: 0,
         oldSlide: 0,
@@ -13,6 +11,9 @@ new Vue({
     created() {
         this.getData('/getImg', 'POST')
             .then(data => this.pictures = data)
+    },
+    mounted() {
+        this.eventsSoketIo()
     },
     methods: {
         addClass(i) {
@@ -40,15 +41,11 @@ new Vue({
 
         },
         swipeLeft() {
-            this.dairection = 'left'
-            this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
-            this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
-            console.log(this.currentSlide + "  " + this.oldSlide)
+
+            this.socket.emit('touchLeft')
         },
         swipeRight() {
-            this.dairection = 'right'
-            this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
-            this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
+            this.socket.emit('touchRight')
         },
         getData(url, type) {
             return fetch(url, {
@@ -57,7 +54,27 @@ new Vue({
                     'Content-Type': 'application/json'
                 }
             }).then(data => data.json())
-            
+
+        },
+        eventsSoketIo() {
+
+           
+
+            this.socket.on('touchLeftServer', () => {
+                console.log('test')
+                this.dairection = 'left'
+                this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
+                this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
+            })
+
+            this.socket.on('touchRightServer', () => {
+                console.log('test')
+                this.dairection = 'right'
+                this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
+                this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
+            })
+
+
         }
     }
 

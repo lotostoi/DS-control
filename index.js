@@ -37,8 +37,8 @@ express.get('*', (request, respons) => {
 })
 
 
-express.post('/getImg', (request, respons) => { 
-    respons.send(scanFolder("./frontend/img","./frontend/img/"))
+express.post('/getImg', (request, respons) => {
+    respons.send(scanFolder("./frontend/img", "./frontend/img/"))
 })
 
 let connections = [],
@@ -97,6 +97,21 @@ io.sockets.on('connection', function (socket) {
     socket.on('touchmove_soket', (data) => {
 
         io.sockets.emit('touchmove_soket_server', { id: socket.id, data: data })
+
+    })
+
+
+    socket.on('touchLeft', () => {
+
+       
+        io.sockets.emit('touchLeftServer')
+
+    })
+
+    socket.on('touchRight', () => {
+
+       
+        io.sockets.emit('touchRightServer')
 
     })
 
