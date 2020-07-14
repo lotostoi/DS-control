@@ -132,14 +132,14 @@ body {
   animation: first 0 forwards;
 }
 .comeLeft {
-  animation: comeLeft 0.9s linear forwards;
+  animation: comeLeft .5s linear forwards;
 }
 .leaveLeft {
-  animation: leaveLeft 0.9s linear forwards;
+  animation: leaveLeft .5s linear forwards;
 }
 .comeRight {
-  animation: comeRight 0.9s linear forwards;
+  animation: comeRight .5s linear forwards;
 }
 .leaveRight {
-  animation: leaveRight 0.9s linear forwards;
+  animation: leaveRight .5s linear forwards;
 }

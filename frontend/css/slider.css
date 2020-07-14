@@ -233,22 +233,22 @@ body {
 }
 
 .comeLeft {
-  -webkit-animation: comeLeft 0.9s linear forwards;
-          animation: comeLeft 0.9s linear forwards;
+  -webkit-animation: comeLeft .5s linear forwards;
+          animation: comeLeft .5s linear forwards;
 }
 
 .leaveLeft {
-  -webkit-animation: leaveLeft 0.9s linear forwards;
-          animation: leaveLeft 0.9s linear forwards;
+  -webkit-animation: leaveLeft .5s linear forwards;
+          animation: leaveLeft .5s linear forwards;
 }
 
 .comeRight {
-  -webkit-animation: comeRight 0.9s linear forwards;
-          animation: comeRight 0.9s linear forwards;
+  -webkit-animation: comeRight .5s linear forwards;
+          animation: comeRight .5s linear forwards;
 }
 
 .leaveRight {
-  -webkit-animation: leaveRight 0.9s linear forwards;
-          animation: leaveRight 0.9s linear forwards;
+  -webkit-animation: leaveRight .5s linear forwards;
+          animation: leaveRight .5s linear forwards;
 }
 /*# sourceMappingURL=slider.css.map */
