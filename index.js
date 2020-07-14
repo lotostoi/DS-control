@@ -1,4 +1,4 @@
-const port = 3100
+const port = 3050
 
 let express = require('express')()
 
