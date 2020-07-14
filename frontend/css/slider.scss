@@ -22,11 +22,11 @@ body {
 @keyframes comeLeft {
   from {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-90%);
   }
   1% {
     opacity: 1;
-    transform: translateX(-100%);
+    transform: translateX(-90%);
   }
   to {
     opacity: 1;
@@ -40,21 +40,21 @@ body {
   }
   99% {
     opacity: 1;
-    transform: translateX(100%);
+    transform: translateX(90%);
   }
   to {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(90%);
   }
 }
 @keyframes comeRight {
   from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(90%);
   }
   1% {
     opacity: 1;
-    transform: translateX(100%);
+    transform: translateX(90%);
   }
   to {
     opacity: 1;
@@ -68,11 +68,11 @@ body {
   }
   99% {
     opacity: 1;
-    transform: translateX(-100%);
+    transform: translateX(-90%);
   }
   to {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-90%);
   }
 }
 
@@ -94,7 +94,7 @@ body {
   left: 0;
   z-index: 10;
   transition: opacity 0.1s 1s;
-  overflow: hidden;
+  
 }
 
 .wrepper > .slide > img {
