@@ -65,7 +65,6 @@ window.onload = () => {
 
                 socket.emit('touchmove_soket', { x: e.touches[0].pageX })
 
-                //  finish = e
             })
 
             socket.on('touchmove_soket_server', (data) => {

@@ -1,15 +1,20 @@
 const port = 3100
 
 let express = require('express')()
+
 let server = require('http').createServer(express)
 
 let io = require('socket.io').listen(server)
+
+let ScanDir = require('./scanDir')
+
+let scanFolder = ScanDir
+
 
 server.listen(port, () => {
     console.log(`Главный экран - http://localhost:${port}/`)
     console.log(`Управялющий экран - http://localhost:${port}/control`)
 })
-
 
 
 express.get('*', (request, respons) => {
@@ -31,6 +36,11 @@ express.get('*', (request, respons) => {
     }
 })
 
+
+express.post('/getImg', (request, respons) => { 
+    respons.send(scanFolder("./frontend/img","./frontend/img/"))
+})
+
 let connections = [],
     numcon = 0;
 
@@ -39,7 +49,7 @@ io.sockets.on('connection', function (socket) {
 
     numcon++
     connections.push(socket.id)
-   
+
     io.sockets.emit('sendid', { numCon: numcon, connections: connections, id: socket.id })
 
 

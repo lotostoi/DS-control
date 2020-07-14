@@ -7,37 +7,72 @@ body {
   overflow: hidden;
   width: 100%;
   height: 100vh;
+  box-sizing: border-box;
 }
 
-@keyframes slide_right {
+@keyframes first {
   from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  1% {
-    transform: translateX(-100%);
-
     opacity: 1;
   }
-  100% {
-    transform: translateX(0%);
+  to {
     opacity: 1;
   }
 }
 
-@keyframes slide_left {
+@keyframes comeLeft {
   from {
-    transform: translateX(100%);
     opacity: 0;
+    transform: translateX(-100%);
   }
   1% {
-    transform: translateX(100%);
-
     opacity: 1;
+    transform: translateX(-100%);
   }
-  100% {
-    transform: translateX(0%);
+  to {
     opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes leaveLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  99% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes comeRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  1% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes leaveRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  99% {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }
 
@@ -46,6 +81,7 @@ body {
   height: 100%;
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
 .wrepper > .slide {
@@ -58,6 +94,7 @@ body {
   left: 0;
   z-index: 10;
   transition: opacity 0.1s 1s;
+  overflow: hidden;
 }
 
 .wrepper > .slide > img {
@@ -89,17 +126,18 @@ body {
   height: 60px;
 }
 
-.right {
-  animation: slide_right 0.5s;
-  opacity: 1 !important;
-  z-index: 40 !important;
+.first {
+  animation: first 0 forwards;
 }
-
-.left {
-  animation: slide_left 0.5s;
-  opacity: 1 !important;
-  z-index: 40 !important;
+.comeLeft {
+  animation: comeLeft 0.9s linear forwards;
 }
-.zIndex {
-  z-index: 30 !important;
+.leaveLeft {
+  animation: leaveLeft 0.9s linear forwards;
+}
+.comeRight {
+  animation: comeRight 0.9s linear forwards;
+}
+.leaveRight {
+  animation: leaveRight 0.9s linear forwards;
 }
