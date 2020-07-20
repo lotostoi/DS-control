@@ -6,16 +6,24 @@ new Vue({
         pictures: [],
         currentSlide: 0,
         oldSlide: 0,
-        dairection: 'none'
+        dairection: 'none',
+        path: ''
     },
     created() {
-        this.getData('/getImg', 'POST')
-            .then(data => this.pictures = data)
+
     },
     mounted() {
+        this.getImg((e) => {
+            this.getData(e, 'POST')
+                .then(data => this.pictures = data)
+        })
         this.eventsSoketIo()
     },
     methods: {
+        getImg(f) {
+            this.path = '/' + this.$el.dataset.name
+            f(this.path)
+        },
         addClass(i) {
             if (this.dairection == 'left') {
                 if (i == this.currentSlide) {
@@ -57,8 +65,6 @@ new Vue({
 
         },
         eventsSoketIo() {
-
-           
 
             this.socket.on('touchLeftServer', () => {
                 console.log('test')

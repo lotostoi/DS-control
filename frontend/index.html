@@ -1,14 +1,14 @@
 <html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>DS-{title}</title>
 <link rel="stylesheet" href="./frontend/css/magnify.css">
 <link rel="stylesheet" href="./frontend/css/slider.css">
 <link rel="shortcut icon" href="~/favicon.ico">
 </head>
 
 <body>
-    <div class="wrepper" id="slider">
+    <div class="wrepper" id="slider"  data-name="{screen}">
         <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight" v-for="(img,i) in pictures">
             <img :src="img.link" alt="">
         </div>
