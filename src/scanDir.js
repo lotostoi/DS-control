@@ -15,7 +15,7 @@ module.exports =  function ScanDir(dir, link) {
     files = fs.readdirSync(folderName)
 
     files.sort(compare)
-    files = files.filter(e => /\d+/.exec(e))
+    files = files.filter(e => /\d+/.exec(e)  && (/.jpg/.test(e)||/.png/.test(e)))
     return files.map(e => {
         return {
             link: (link || '/') + e,
