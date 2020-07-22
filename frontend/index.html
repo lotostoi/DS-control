@@ -1,24 +1,29 @@
-<html>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DS-{title}</title>
-<link rel="stylesheet" href="./../frontend/css/magnify.css">
-<link rel="stylesheet" href="./../frontend/css/slider.css">
-<link rel="shortcut icon" href="~/favicon.ico">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS-{title}</title>
+    <link rel="stylesheet" href="/frontend/css/slider.css">
 </head>
 
 <body>
-    <div class="wrepper" id="slider"  data-name="{screen}" data-id={id}>
-        <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight" v-for="(img,i) in pictures">
-            <img :src="img.link" alt="">
+    <div class="wrepper" id="slider" data-name="{screen}" data-id="{id}">
+        <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
+            v-for="(img,i) in pictures">
+            <img v-if="(img.teg == 'img')" :src="img.link" alt="img">
+            <video v-if="(img.teg == 'video')" :src="img.link"  :ref="img.name"> 
+                <source :src="img.link" > 
+            </video>
         </div>
     </div>
 
 
-    <script src="./../socket.io/socket.io.js"></script>
-    <script src="./../frontend/js/vue.js"></script>
-    <script src="./../frontend/js/touch-events.js"></script>
-    <script src="./../frontend/js/sliderVue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/frontend/js/vue.js"></script>
+    <script src="/frontend/js/touch-events.js"></script>
+    <script src="/frontend/js/sliderVue.js"></script>
 
 </body>
 
