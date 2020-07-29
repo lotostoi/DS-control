@@ -67,8 +67,7 @@ express.get('*', (request, respons) => {
                 let cotalog = fs.readdirSync('frontend/images/' + baseLink)
                 if (addLink) {
                     if (cotalog.find(e => e == addLink)) {
-                       
-
+                    
                         data = data.replace("{title}", arr[1]).replace("{screen}", baseLink + '/' + addLink).replace('{id}', baseLink);
                         respons.end(data);
                     } else {

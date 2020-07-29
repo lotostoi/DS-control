@@ -1,4 +1,23 @@
 
+
+
+function toggleFullScreen() {
+    var doc = window.document;
+    var docEl = doc.documentElement;
+
+    var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+    if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+        requestFullScreen.call(docEl);
+    }
+    else {
+        cancelFullScreen.call(doc);
+    }
+}
+
+
+
 new Vue({
     el: '#slider',
     data: {
@@ -8,23 +27,36 @@ new Vue({
         oldSlide: 0,
         dairection: 'none',
         path: '',
-        id: ''
+        id: '',
+        isControl: false,
+        access: true
 
     },
     created() {
 
     },
+    beforeMount() {
+        this.isControl = /Control/.test(this.$el.dataset.name)
+    },
     mounted() {
-        this.getImg((e) => {
-            this.getData(e, 'POST')
-                .then(data => {
-                    this.pictures = data
-                    this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                })
 
-        })
+        if (!this.isControl) {
+            this.getImg((e) => {
+                this.getData(e, 'POST')
+                    .then(data => {
+                        this.pictures = data
+                        this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
+                    })
+
+            })
+        }
+
+
+
+
         this.id = this.$el.dataset.id
         this.eventsSoketIo()
+
     },
     methods: {
         getImg(f) {
@@ -57,9 +89,11 @@ new Vue({
 
         },
         swipeLeft() {
+            console.log('l')
             this.socket.emit('touchLeft', this.id)
         },
         swipeRight() {
+            console.log('r')
             this.socket.emit('touchRight', this.id)
         },
         getData(url, type) {
@@ -72,21 +106,29 @@ new Vue({
 
         },
         eventsSoketIo() {
+           
 
             this.socket.on('touchLeftServer', (data) => {
-                if (data != this.id) return false
+                console.log('sl')
+                if (data != this.id || this.isControl) return false
+                console.log('sl')
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
                 this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
             })
 
             this.socket.on('touchRightServer', (data) => {
-                if (data != this.id) return false
+                console.log('sr')
+                if (data != this.id || this.isControl ) return false
+                console.log('sr')
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
                 this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
             })
         },
+        fullScreenOn() {
+            toggleFullScreen()
+        }
 
     },
     watch: {
@@ -97,7 +139,7 @@ new Vue({
                 video.play()
                 video.volume = 0
                 let chengVolume = setInterval(() => {
-                    video.volume += 0.05                 
+                    video.volume += 0.04
                     if (video.volume > 0.95) {
                         clearInterval(chengVolume)
                     }
