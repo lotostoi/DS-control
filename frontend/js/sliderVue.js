@@ -35,10 +35,10 @@ new Vue({
     },
 
     beforeMount() {
-     this.screen = this.$el.dataset.screen  
+        this.screen = this.$el.dataset.screen
 
-     console.log(this.screen)
-     this.isControl = /Control/.test(this.$el.dataset.name)
+        console.log(this.screen)
+        this.isControl = /Control/.test(this.$el.dataset.name)
     },
 
     mounted() {
@@ -60,7 +60,7 @@ new Vue({
     },
     methods: {
         getImg(f) {
-            this.path = '/getData'+ this.$el.dataset.link
+            this.path = '/getData' + this.$el.dataset.link
             console.log(this.path)
             f(this.path)
         },
@@ -89,12 +89,26 @@ new Vue({
 
         },
         swipeLeft() {
-            console.log('l')
+
             this.socket.emit('touchLeft', this.id)
+
+            if (this.screen !== 'nocontrol') {
+                this.socket.emit('touchLeft', this.id)
+            } else {
+                this.dairection = 'left'
+                this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
+                this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
+            }
         },
         swipeRight() {
-            console.log('r')
-            this.socket.emit('touchRight', this.id)
+            if (this.screen !== 'nocontrol') {
+                this.socket.emit('touchRight', this.id)
+            } else {
+                this.dairection = 'right'
+                this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
+                this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
+            }
+
         },
         getData(url, type) {
             return fetch(url, {
@@ -106,21 +120,21 @@ new Vue({
 
         },
         eventsSoketIo() {
-           
+
 
             this.socket.on('touchLeftServer', (data) => {
-               
+
                 if (data != this.id || this.isControl || this.screen === 'nocontrol') return false
-                
+
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
                 this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
             })
 
             this.socket.on('touchRightServer', (data) => {
-                
+
                 if (data != this.id || this.isControl || this.screen === 'nocontrol') return false
-                
+
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
                 this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
