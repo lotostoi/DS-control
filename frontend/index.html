@@ -9,9 +9,8 @@
 </head>
 
 <body>
-
-    <div class="wrepper" id="slider" data-name="{screen}" data-id="{id}">
-        <div class="contSlider" v-if="!isControl">
+    <div class="wrepper" id="slider" data-link="{link}" data-screen="{screen}" data-id="{id}">
+        <div class="contSlider" v-if="screen ===  'user' || screen ===  'nocontrol'">
             <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
                 v-for="(img,i) in pictures" v-touch:swipe.bottom="fullScreenOn">
                 <img v-if="(img.teg == 'img')" :src="img.link" alt="img">
@@ -20,15 +19,13 @@
                 </video>
             </div>
         </div>
-        <div v-else class="control" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
-            v-touch:swipe.bottom="fullScreenOn">
+        <div v-if="screen ===  'control'" class="control" v-touch:swipe.left="swipeLeft"
+            v-touch:swipe.right="swipeRight" v-touch:swipe.bottom="fullScreenOn">
             <h1>The content for the page is in Control!</h1>
             <p>Scroll left or right to check.</p>
-        </div>
-
+        </div>    
     </div>
-
-
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="/frontend/js/vue.js"></script>
     <script src="/frontend/js/touch-events.js"></script>

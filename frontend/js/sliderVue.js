@@ -29,20 +29,23 @@ new Vue({
         path: '',
         id: '',
         isControl: false,
-        access: true
+        access: true,
+        screen: 'user'
 
     },
-    created() {
 
-    },
     beforeMount() {
-        this.isControl = /Control/.test(this.$el.dataset.name)
+     this.screen = this.$el.dataset.screen  
+
+     console.log(this.screen)
+     this.isControl = /Control/.test(this.$el.dataset.name)
     },
+
     mounted() {
 
         if (!this.isControl) {
             this.getImg((e) => {
-                this.getData(e, 'POST')
+                this.getData(e)
                     .then(data => {
                         this.pictures = data
                         this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
@@ -51,17 +54,14 @@ new Vue({
             })
         }
 
-
-
-
         this.id = this.$el.dataset.id
         this.eventsSoketIo()
 
     },
     methods: {
         getImg(f) {
-            this.path = '/' + this.$el.dataset.name
-
+            this.path = '/getData'+ this.$el.dataset.link
+            console.log(this.path)
             f(this.path)
         },
         addClass(i) {
@@ -109,18 +109,18 @@ new Vue({
            
 
             this.socket.on('touchLeftServer', (data) => {
-                console.log('sl')
-                if (data != this.id || this.isControl) return false
-                console.log('sl')
+               
+                if (data != this.id || this.isControl || this.screen === 'nocontrol') return false
+                
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
                 this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
             })
 
             this.socket.on('touchRightServer', (data) => {
-                console.log('sr')
-                if (data != this.id || this.isControl ) return false
-                console.log('sr')
+                
+                if (data != this.id || this.isControl || this.screen === 'nocontrol') return false
+                
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
                 this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
@@ -139,7 +139,7 @@ new Vue({
                 video.play()
                 video.volume = 0
                 let chengVolume = setInterval(() => {
-                    video.volume += 0.04
+                    video.volume += 0.03
                     if (video.volume > 0.95) {
                         clearInterval(chengVolume)
                     }

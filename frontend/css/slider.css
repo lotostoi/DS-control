@@ -3,6 +3,50 @@
   padding: 0;
 }
 
+[v-cloak] {
+  display: block;
+  padding: 50px 0;
+}
+
+@-webkit-keyframes spinner {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+[v-cloak]:before {
+  content: '';
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  -webkit-animation: spinner .6s linear infinite;
+          animation: spinner .6s linear infinite;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+[v-cloak] > div {
+  display: none;
+}
+
 body {
   overflow: hidden;
   width: 100%;
