@@ -90,8 +90,6 @@ new Vue({
         },
         swipeLeft() {
 
-            this.socket.emit('touchLeft', this.id)
-
             if (this.screen !== 'nocontrol') {
                 this.socket.emit('touchLeft', this.id)
             } else {
