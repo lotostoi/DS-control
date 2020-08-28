@@ -38,7 +38,7 @@ new Vue({
         this.screen = this.$el.dataset.screen
 
         console.log(this.screen)
-        this.isControl = /Control/.test(this.$el.dataset.name)
+        this.isControl = /сontrol/.test(this.$el.dataset.name)
     },
 
     mounted() {
