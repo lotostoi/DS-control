@@ -43,15 +43,22 @@ new Vue({
 
     mounted() {
 
-        if (!this.isControl) {
-            this.getImg((e) => {
-                this.getData(e)
-                    .then(data => {
-                        this.pictures = data
-                        this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                    })
+        if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
+            let link = '/getData' + this.$el.dataset.link
 
-            })
+            console.log(link)
+
+            return fetch(link, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+                .then(data => {
+                    this.pictures = data
+                    this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
+                })
+
+
         }
 
         this.id = this.$el.dataset.id
@@ -108,7 +115,7 @@ new Vue({
             }
 
         },
-        getData(url, type) {
+  /*       getDat(url, type) {
             return fetch(url, {
                 method: type,
                 headers: {
@@ -116,7 +123,7 @@ new Vue({
                 }
             }).then(data => data.json())
 
-        },
+        }, */
         eventsSoketIo() {
 
 

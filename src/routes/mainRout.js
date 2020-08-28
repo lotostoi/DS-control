@@ -12,6 +12,9 @@ const scanDir = require('./../scanDir')
 // link to index.html
 const link = path.join('frontend', 'index.html')
 
+
+
+
 router.get('*', async (req, res) => {
 
     const rout = req.path.toLowerCase()
@@ -28,7 +31,11 @@ router.get('*', async (req, res) => {
         res.sendFile(path.join(__dirname, '../..', req.path))
     }
     // getting data about images 
-    else if (rout.includes('getdata')) {
+ /*    else if (rout.includes('/')) {
+        res.sendFile('<h1> Input correct path ... </h1>')
+    } */
+    // getting data about images 
+    else if (rout.includes('getdata/')) {
         res.send(await scanDir(req.path.replace('/getData', '')))
     }
 
@@ -47,10 +54,10 @@ router.get('*', async (req, res) => {
         res.send(await editTamplate(link, title, 'user', req.path))
     }
 
-    else {
+  /*   else {
         console.log('outher')
         res.sendFile(path.join(__dirname, '../..', req.path))
-    }
+    } */
 
 })
 
