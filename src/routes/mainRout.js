@@ -30,15 +30,12 @@ router.get('*', async (req, res) => {
     if (rout.includes('.')) {
         res.sendFile(path.join(__dirname, '../..', req.path))
     }
+
     // getting data about images 
- /*    else if (rout.includes('/')) {
-        res.sendFile('<h1> Input correct path ... </h1>')
-    } */
-    // getting data about images 
-    else if (rout.includes('getdata/')) {
+    else if (rout.includes('getdata')) {
         res.send(await scanDir(req.path.replace('/getData', '')))
     }
-
+  
     // for NorControl
     else if (rout.includes('nocontrol')) {
         res.send(await editTamplate(link, title, 'nocontrol', req.path))
@@ -52,6 +49,10 @@ router.get('*', async (req, res) => {
     // for User
     else if (rout.includes('user')) {
         res.send(await editTamplate(link, title, 'user', req.path))
+    }
+    // getting data about images 
+    else if (rout.includes('getdata')) {
+        res.send(await scanDir(req.path.replace('/getData', '')))
     }
 
   /*   else {

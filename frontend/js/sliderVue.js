@@ -56,21 +56,17 @@ new Vue({
                 .then(data => {
                     this.pictures = data
                     this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
+                    console.log('tets')
+                    this.id = this.$el.dataset.id
+                    this.eventsSoketIo()
                 })
-
 
         }
 
-        this.id = this.$el.dataset.id
-        this.eventsSoketIo()
 
     },
     methods: {
-        getImg(f) {
-            this.path = '/getData' + this.$el.dataset.link
-            console.log(this.path)
-            f(this.path)
-        },
+   
         addClass(i) {
             if (this.dairection == 'left') {
                 if (i == this.currentSlide) {
@@ -115,21 +111,14 @@ new Vue({
             }
 
         },
-  /*       getDat(url, type) {
-            return fetch(url, {
-                method: type,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(data => data.json())
 
-        }, */
         eventsSoketIo() {
 
 
             this.socket.on('touchLeftServer', (data) => {
+                console.log('left')
 
-                if (data != this.id || this.isControl || this.screen === 'nocontrol') return false
+                if (data != this.id || this.isControl  || this.screen === 'nocontrol' ) return false
 
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
@@ -137,8 +126,8 @@ new Vue({
             })
 
             this.socket.on('touchRightServer', (data) => {
-
-                if (data != this.id || this.isControl || this.screen === 'nocontrol') return false
+                console.log('right')
+                if (data != this.id || this.isControl  || this.screen === 'nocontrol' ) return false
 
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
