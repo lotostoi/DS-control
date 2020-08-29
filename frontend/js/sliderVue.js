@@ -30,7 +30,8 @@ new Vue({
         id: '',
         isControl: false,
         access: true,
-        screen: 'user'
+        screen: 'user',
+        error: false
 
     },
 
@@ -44,7 +45,7 @@ new Vue({
     mounted() {
 
         if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
-            let link = '/getData' + this.$el.dataset.link
+            let link = '/getData/' + this.$el.dataset.link.replace('/','_')
 
             console.log(link)
 
@@ -54,13 +55,17 @@ new Vue({
                 }
             }).then(data => data.json())
                 .then(data => {
-                    this.pictures = data
-                    this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                    console.log('tets')
-                    this.id = this.$el.dataset.id
-                    this.eventsSoketIo()
-                })
+                    if (!data.error) {
+                        this.pictures = data
+                        this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
+                        console.log('tets')
+                        this.id = this.$el.dataset.id
+                        this.eventsSoketIo()
+                    } else { 
+                        this.error = true
+                    }
 
+                })
         }
 
 
