@@ -16,11 +16,22 @@ const getDataRouter = require('./src/routes/getData')
 
 const content = require('./src/routes/content')
 
-app.get('/', (req, res) => { 
-    res.send("<h1> Page isn't  selected </h1>")
+const getAllLinksFromDir = require('./src/getArrLinks')
+
+
+app.use(async (req, res, next) => {
+    let link = path.join(__dirname, 'frontend','images')
+    let links = await getAllLinksFromDir(link) 
+    req.links = links
+    next()
 })
 
+
 app.use(express.static(path.join(__dirname, 'frontend')))
+
+app.get('/', (req, res) => {
+    res.send("<h1> Page isn't  selected </h1>")
+})
 
 app.use(getDataRouter)
 

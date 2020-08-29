@@ -17,22 +17,30 @@ const editTamplate = require('../editTemplate')
 
 router.get('/tp/:id', async (req, res) => {
 
-    const l = req.params.id.replace('_', '/')
+    const l = req.params.id.replace('_', '\\')
 
-    let [first, second = ''] = l.toLowerCase().split('/')
+    let [first, second = ''] = l.toLowerCase().split('\\')
 
     try {
         if (first.endsWith('control')) {
+            let lin = req.links.find(link => link.toLowerCase().endsWith(l))
+            let newlin = lin.split('\\')[lin.split('\\').length - 1]
+            console.log(newlin)
             return res.send(await editTamplate(link, first, 'control', l))
         }
 
         if (first.startsWith('nocontrol')) {
-            return res.send(await editTamplate(link, first, 'nocontrol', l))
+            let lin = req.links.find(link => link.toLowerCase().endsWith(l))
+            let newlin = lin.split('\\')[lin.split('\\').length - 2] + '/' + lin.split('\\')[lin.split('\\').length - 1]
+            return res.send(await editTamplate(link, first, 'nocontrol', newlin))
         }
 
         if (first.startsWith('user')) {
-            return res.send(await editTamplate(link, first, 'user', l))
-        } 
+            let lin = req.links.find(link => link.toLowerCase().endsWith(l))
+            let newlin = lin.split('\\')[lin.split('\\').length - 2] + '/' + lin.split('\\')[lin.split('\\').length - 1]
+
+            return res.send(await editTamplate(link, first, 'user', newlin))
+        }
         res.send("<h1> Page isn't  found </h1>")
     } catch (e) {
         res.send("<h1> Page isn't  found </h1>")
