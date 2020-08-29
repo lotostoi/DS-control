@@ -16,7 +16,7 @@ const getDataRouter = require('./src/routes/getData')
 
 const content = require('./src/routes/content')
 
-const getAllLinksFromDir = require('./src/getArrLinks')
+//const getAllLinksFromDir = require('./src/getArrLinks')
 
 
 /* app.use(async (req, res, next) => {

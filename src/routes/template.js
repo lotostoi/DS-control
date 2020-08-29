@@ -16,9 +16,9 @@ const editTamplate = require('../editTemplate')
 
 router.get('/tp/:id', async (req, res) => {
 
-    const l = req.params.id.replace('_', '\\')
+    const l = req.params.id.replace('_', '/')
 
-    let [first, second = ''] = l.toLowerCase().split('\\')
+    let [first, second = ''] = l.toLowerCase().split('/')
 
     try {
         if (first.endsWith('control')) {
