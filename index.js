@@ -19,13 +19,13 @@ const content = require('./src/routes/content')
 const getAllLinksFromDir = require('./src/getArrLinks')
 
 
-app.use(async (req, res, next) => {
+/* app.use(async (req, res, next) => {
     let link = path.join(__dirname, 'frontend','images')
     let links = await getAllLinksFromDir(link) 
     req.links = links
     next()
 })
-
+ */
 
 app.use(express.static(path.join(__dirname, 'frontend')))
 
