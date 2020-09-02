@@ -40,6 +40,13 @@ router.get('/tp/:id', async (req, res) => {
 
             return res.send(await editTamplate(link, first, 'user', l))
         }
+
+        if (first.startsWith('scrol')) {
+           /*  let lin = req.links.find(link => link.toLowerCase().endsWith(l))
+            let newlin = lin.split('\\')[lin.split('\\').length - 2] + '/' + lin.split('\\')[lin.split('\\').length - 1] */
+
+            return res.send(await editTamplate(link, first, 'scrol', l))
+        }
         res.send("<h1> Page isn't  found </h1>")
     } catch (e) {
         res.send("<h1> Page isn't  found </h1>")

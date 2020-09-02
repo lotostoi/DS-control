@@ -10,6 +10,7 @@
 
 <body>
     <div class="wrepper" id="slider" data-link="{link}" data-screen="{screen}" data-id="{id}">
+
         <div class="contSlider" v-if="!error && screen ===  'user' || screen ===  'nocontrol' ">
             <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
                 v-for="(img,i) in pictures" v-touch:swipe.bottom="fullScreenOn">
@@ -23,10 +24,14 @@
             v-touch:swipe.right="swipeRight" v-touch:swipe.bottom="fullScreenOn">
             <h1>The content for the page is in Control!</h1>
             <p>Scroll left or right to check.</p>
-        </div>    
-        <h1 v-if = "error">Page isn't found</h1>    
+        </div>
+        <div v-if="!error && screen ===  'scrol'" class="scrol" v-touch:swipe.right="fullScreenOn" v-touch:swipe.left="fullScreenOn">
+
+            <img :src="linkSkroll" alt="img" style="width:100%">
+        </div>
+        <h1 v-if="error">Page isn't found</h1>
     </div>
-    
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="/frontend/js/vue.js"></script>
     <script src="/frontend/js/touch-events.js"></script>

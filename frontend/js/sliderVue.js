@@ -45,7 +45,7 @@ new Vue({
     mounted() {
 
         if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
-            let link = '/getData/' + this.$el.dataset.link.replace('/','_')
+            let link = '/getData/' + this.$el.dataset.link.replace('/', '_')
 
             console.log(link)
 
@@ -56,12 +56,13 @@ new Vue({
             }).then(data => data.json())
                 .then(data => {
                     if (!data.error) {
+                        console.log(data)
                         this.pictures = data
                         this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                        console.log('tets')
+                        console.log(this.pictures)
                         this.id = this.$el.dataset.id
                         this.eventsSoketIo()
-                    } else { 
+                    } else {
                         this.error = true
                     }
 
@@ -71,7 +72,7 @@ new Vue({
 
     },
     methods: {
-   
+
         addClass(i) {
             if (this.dairection == 'left') {
                 if (i == this.currentSlide) {
@@ -121,9 +122,9 @@ new Vue({
 
 
             this.socket.on('touchLeftServer', (data) => {
-              
 
-                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */ ) return false
+
+                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */) return false
 
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
@@ -131,8 +132,8 @@ new Vue({
             })
 
             this.socket.on('touchRightServer', (data) => {
-              
-                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */ ) return false
+
+                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */) return false
 
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
@@ -143,6 +144,12 @@ new Vue({
             toggleFullScreen()
         }
 
+    },
+    computed: {
+        linkSkroll() {
+
+            return this.pictures[0] ? this.pictures[0].link : false
+        }
     },
     watch: {
         currentSlide() {
@@ -166,7 +173,6 @@ new Vue({
             }
 
         },
-
 
     }
 
