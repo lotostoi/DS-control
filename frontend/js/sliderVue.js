@@ -121,9 +121,9 @@ new Vue({
 
 
             this.socket.on('touchLeftServer', (data) => {
-                console.log('left')
+              
 
-                if (data != this.id || this.isControl  || this.screen === 'nocontrol' ) return false
+                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */ ) return false
 
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
@@ -131,8 +131,8 @@ new Vue({
             })
 
             this.socket.on('touchRightServer', (data) => {
-                console.log('right')
-                if (data != this.id || this.isControl  || this.screen === 'nocontrol' ) return false
+              
+                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */ ) return false
 
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
