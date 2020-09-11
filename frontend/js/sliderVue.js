@@ -16,8 +16,6 @@ function toggleFullScreen() {
     }
 }
 
-
-
 new Vue({
     el: '#slider',
     data: {
