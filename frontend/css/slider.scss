@@ -40,7 +40,7 @@ $length: 99%;
 } */
 
 body {
- // overflow: hidden;
+  // overflow: hidden;
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
@@ -129,14 +129,14 @@ body {
   height: 100%;
   display: flex;
   position: relative;
-//  overflow: hidden;
+  overflow: hidden;
 }
 .wrepper .contScroll {
   width: 100%;
   height: 100%;
   display: flex;
   position: relative;
-//  overflow: hidden;
+    overflow-x: hidden;
 }
 
 .wrepper .control {
@@ -152,7 +152,6 @@ body {
   font-size: 30px;
 }
 
-
 .wrepper .contSlider > .slide {
   opacity: 0;
   display: flex;
@@ -167,7 +166,7 @@ body {
 .wrepper .contScroll > .slide {
   opacity: 0;
   display: flex;
-  width: 100%;
+  width: 100vw;
   //height: 100%;
   position: absolute;
   top: 0;
@@ -217,14 +216,86 @@ body {
   animation: first 0 forwards;
 }
 .comeLeft {
-  animation: comeLeft .5s linear forwards;
+  animation: comeLeft 0.5s linear forwards;
 }
 .leaveLeft {
-  animation: leaveLeft .5s linear forwards;
+  animation: leaveLeft 0.5s linear forwards;
 }
 .comeRight {
-  animation: comeRight .5s linear forwards;
+  animation: comeRight 0.5s linear forwards;
 }
 .leaveRight {
-  animation: leaveRight .5s linear forwards;
+  animation: leaveRight 0.5s linear forwards;
+}
+
+// multi
+.multi {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.slideMulti {
+  opacity: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: opacity 0.1s 1s;
+  overflow: hidden;
+}
+
+.slideMulti > img {
+  width: 100%;
+  height: 100%;
+}
+
+.oneOfMulti {
+  width: 100%;
+  height: 100%;
+}
+
+
+// transition between  sliders
+
+@keyframes leave {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(-30px);
+
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.price {
+  margin: 0;
+}
+
+.sl-leave {
+  animation: leave 0.3s linear forwards;
+}
+
+.sl-enter {
+  animation: enter 0.3s linear forwards;
 }

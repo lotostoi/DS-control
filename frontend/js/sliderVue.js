@@ -38,7 +38,7 @@ new Vue({
     beforeMount() {
         this.screen = this.$el.dataset.screen
 
-        console.log(this.screen)
+       
         this.isControl = /сontrol/.test(this.$el.dataset.name)
     },
 
@@ -63,10 +63,10 @@ new Vue({
                 }).then(data => data.json())
                     .then(data => {
                         if (!data.error) {
-                            console.log(data)
+                         
                             this.pictures = data
                             this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                            console.log(this.pictures)
+                           
                             this.id = this.$el.dataset.id
                             this.eventsSoketIo()
                         } else {
@@ -109,7 +109,7 @@ new Vue({
 
         },
         swipeLeft() {
-            console.log('sl')
+       
 
             if (this.screen !== 'nocontrol') {
                 this.socket.emit('touchLeft', this.id)
@@ -120,7 +120,7 @@ new Vue({
             }
         },
         swipeRight() {
-            console.log('sl')
+          
             if (this.screen !== 'nocontrol') {
                 this.socket.emit('touchRight', this.id)
             } else {
@@ -173,8 +173,9 @@ new Vue({
                 video.play()
                 video.volume = 0
                 let chengVolume = setInterval(() => {
-                    video.volume += 0.03
-                    if (video.volume > 0.95) {
+                    video.volume = video.volume < 0.93 ? (video.volume + 0.03) : video.volume
+                   
+                    if (video.volume > 0.93) {
                         clearInterval(chengVolume)
                     }
                 }, 500)
