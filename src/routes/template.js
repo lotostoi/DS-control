@@ -44,16 +44,18 @@ router.get('/tp/:id', async (req, res) => {
         }
 
         if (first.includes('multi')) {
+            
             console.log('multi')
 
             return res.send(await editTamplate(path.join('frontend', 'multi.html'), first, 'multi', l))
         }
 
-  
-        res.send("<h1> Page isn't  found  sfgsdf </h1>")
+        res.send("<h1> Page isn't  found   </h1>")
+
     } catch (e) {
-        console.log(e)
-        res.send(`<h1> Page isn't  found fghgf  ${e}</h1>`)
+     
+        res.send(`<h1>  We have error ${e}</h1>`)
+
     }
 
 })
