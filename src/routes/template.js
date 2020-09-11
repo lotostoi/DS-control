@@ -21,7 +21,7 @@ router.get('/tp/:id', async (req, res) => {
     let [first, second = ''] = l.toLowerCase().split('/')
 
     try {
-/*         if (first.endsWith('control')) {
+         if (first.endsWith('control')) {
        
             return res.send(await editTamplate(link, first, 'control', l))
         }
@@ -49,9 +49,9 @@ router.get('/tp/:id', async (req, res) => {
 
             return res.send(await editTamplate(path.join('frontend', 'multi.html'), first, 'multi', l))
 
-        } */
+        } 
 
-        res.send("<h1> Page isn't  found try  </h1>")
+        res.send("<h1> Page isn't  found </h1>")
 
     } catch (e) {
      
