@@ -53,7 +53,7 @@ router.get('/tp/:id', async (req, res) => {
         res.send("<h1> Page isn't  found </h1>")
     } catch (e) {
         console.log(e)
-        res.send("<h1> Page isn't  found </h1>")
+        res.send(`<h1> Page isn't  found  ${e}</h1>`)
     }
 
 })
