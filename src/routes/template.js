@@ -22,36 +22,43 @@ router.get('/tp/:id', async (req, res) => {
 
     try {
         if (first.endsWith('control')) {
-       /*      let lin = req.links.find(link => link.toLowerCase().endsWith(l))
-            let newlin = lin.split('\\')[lin.split('\\').length - 1]
-            console.log(newlin) */
+       
             return res.send(await editTamplate(link, first, 'control', l))
         }
 
         if (first.startsWith('nocontrol')) {
-       /*      let lin = req.links.find(link => link.toLowerCase().endsWith(l))
-            let newlin = lin.split('\\')[lin.split('\\').length - 2] + '/' + lin.split('\\')[lin.split('\\').length - 1] */
-            return res.send(await editTamplate(link, first, 'nocontrol',l))
+       
+            return res.send(await editTamplate(link, first, 'nocontrol', l))
         }
 
         if (first.startsWith('user')) {
-           /*  let lin = req.links.find(link => link.toLowerCase().endsWith(l))
-            let newlin = lin.split('\\')[lin.split('\\').length - 2] + '/' + lin.split('\\')[lin.split('\\').length - 1] */
+        
 
             return res.send(await editTamplate(link, first, 'user', l))
         }
 
         if (first.startsWith('scrol')) {
-           /*  let lin = req.links.find(link => link.toLowerCase().endsWith(l))
-            let newlin = lin.split('\\')[lin.split('\\').length - 2] + '/' + lin.split('\\')[lin.split('\\').length - 1] */
+      
 
             return res.send(await editTamplate(link, first, 'scrol', l))
         }
+
+        if (first.includes('multi')) {
+            console.log('multi')
+
+            return res.send(await editTamplate(path.resolve('frontend', 'multi.html'), first, 'multi', l))
+        }
+
+  
         res.send("<h1> Page isn't  found </h1>")
     } catch (e) {
+        console.log(e)
         res.send("<h1> Page isn't  found </h1>")
     }
 
 })
 
 module.exports = router
+
+
+

@@ -11,13 +11,15 @@
 <body>
     <div class="wrepper" id="slider" data-link="{link}" data-screen="{screen}" data-id="{id}">
 
-        <div class="contSlider" v-if="!error && screen ===  'user' || screen ===  'nocontrol' ">
+        <div class="contSlider" v-if="!error && screen ===  'user' || screen ===  'nocontrol' || screen ===  'main' ">
             <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
                 v-for="(img,i) in pictures" v-touch:swipe.bottom="fullScreenOn">
                 <img v-if="(img.teg == 'img')" :src="img.link" alt="img">
                 <video v-if="(img.teg == 'video')" :src="img.link" :ref="img.name">
                     <source :src="img.link">
                 </video>
+         
+
             </div>
         </div>
         <div v-if="!error && screen ===  'control'" class="control" v-touch:swipe.left="swipeLeft"
@@ -27,8 +29,8 @@
         </div>
         <div v-if="!error && screen ===  'scrol'" class="contScroll">
             <div class="slide" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
-                v-for="(img,i) in pictures" >
-                <img v-if="(img.teg == 'img')" :src="img.link" alt="img" >
+                v-for="(img,i) in pictures">
+                <img v-if="(img.teg == 'img')" :src="img.link" alt="img">
                 <video v-if="(img.teg == 'video')" :src="img.link" :ref="img.name">
                     <source :src="img.link">
                 </video>

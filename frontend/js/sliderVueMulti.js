@@ -22,7 +22,7 @@ new Vue({
     el: '#slider',
     data: {
         socket: io.connect(),
-        pictures: [],
+
         currentSlide: 0,
         oldSlide: 0,
         dairection: 'none',
@@ -31,8 +31,11 @@ new Vue({
         isControl: false,
         access: true,
         screen: 'user',
-        error: false
-
+        error: false,
+        sliders: [],
+        index: 0,
+        oldIndex: 0,
+        pictures: [],
     },
 
     beforeMount() {
@@ -44,41 +47,31 @@ new Vue({
 
     mounted() {
 
-        if (this.screen === 'main') {
+        if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
+            let link = '/getData/' + this.$el.dataset.link.replace('/', '_')
 
-            this.pictures = IFRAMES.map(i => { return { link: i, teg: 'iframe' } })
-           // console.log(IFRAMES.map(i => { return {link: i , teg: 'iframe'} }))
+            console.log(link)
 
-        } else { 
+            return fetch(link, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+                .then(data => {
+                    if (!data.error) {
 
-            if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
-                let link = '/getData/' + this.$el.dataset.link.replace('/', '_')
 
+                        this.sliders = data
 
+                        this.getPictures([...this.sliders[this.index]])
 
-                return fetch(link, {
-                    headers: {
-                        'Content-Type': 'application/json'
+                        this.eventsSoketIo()
+                    } else {
+                        this.error = true
                     }
-                }).then(data => data.json())
-                    .then(data => {
-                        if (!data.error) {
-                            console.log(data)
-                            this.pictures = data
-                            this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                            console.log(this.pictures)
-                            this.id = this.$el.dataset.id
-                            this.eventsSoketIo()
-                        } else {
-                            this.error = true
-                        }
 
-                    })
-            }
-
+                })
         }
-
-        
 
 
     },
@@ -106,28 +99,29 @@ new Vue({
             } else {
                 if (i == this.currentSlide) { return 'first' } else { return '' }
             }
+        },
+
+        getPictures(arr) {
+
+            arr.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
+
+            this.pictures = arr
 
         },
-        swipeLeft() {
-            console.log('sl')
 
-            if (this.screen !== 'nocontrol') {
-                this.socket.emit('touchLeft', this.id)
-            } else {
-                this.dairection = 'left'
-                this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
-                this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
-            }
+        swipeLeft() {
+
+            this.dairection = 'left'
+            this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
+            this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
+
         },
         swipeRight() {
-            console.log('sl')
-            if (this.screen !== 'nocontrol') {
-                this.socket.emit('touchRight', this.id)
-            } else {
-                this.dairection = 'right'
-                this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
-                this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
-            }
+
+            this.dairection = 'right'
+            this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
+            this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
+
 
         },
 
@@ -136,34 +130,39 @@ new Vue({
 
             this.socket.on('touchLeftServer', (data) => {
 
+                this.index = --this.index < 0 ? this.sliders.length - 1 : this.index
+                this.oldndex = this.index != this.sliders.length - 1 ? this.index + 1 : 0
 
-                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */) return false
+                this.currentSlide = 1
+                this.oldSlide = 0
 
-                this.dairection = 'left'
-                this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
-                this.oldSlide = this.currentSlide != this.pictures.length - 1 ? this.currentSlide + 1 : 0
+                this.pictures = this.sliders[this.index]
             })
 
             this.socket.on('touchRightServer', (data) => {
 
-                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */) return false
+                this.index = ++this.index > this.sliders.length - 1 ? 0 : this.index
+                this.oldSlide = this.index != 0 ? this.index - 1 : this.sliders.length - 1
 
-                this.dairection = 'right'
-                this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
-                this.oldSlide = this.currentSlide != 0 ? this.currentSlide - 1 : this.pictures.length - 1
+                this.currentSlide =1
+                this.oldSlide = 0
+             
+                this.pictures = this.sliders[this.index]
             })
         },
         fullScreenOn() {
             toggleFullScreen()
-        },
-
+        }
 
     },
     computed: {
-        linkSkroll() {
-
-            return this.pictures[0] ? this.pictures[0].link : false
-        }
+        /*    linkSkroll() {
+   
+               return this.pictures[0] ? this.pictures[0].link : false
+           } */
+        /*  pictures() { 
+             return this.index ? this.sliders[this.index] : this.sliders[0]
+         } */
     },
     watch: {
         currentSlide() {

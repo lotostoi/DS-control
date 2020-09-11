@@ -5,7 +5,7 @@
 
 $length: 99%;
 
-[v-cloak] {
+/* [v-cloak] {
   display: block;
   padding: 50px 0;
 
@@ -37,7 +37,7 @@ $length: 99%;
   & > div {
     display: none;
   }
-}
+} */
 
 body {
  // overflow: hidden;
@@ -129,7 +129,7 @@ body {
   height: 100%;
   display: flex;
   position: relative;
-  overflow: hidden;
+//  overflow: hidden;
 }
 .wrepper .contScroll {
   width: 100%;
