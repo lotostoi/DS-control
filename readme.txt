@@ -61,5 +61,10 @@ document.body.appendChild(ioScript)
 
 sudo docker restart ds3097 
 
+lotostoi
 Dns2IetxavuYVCQ
 
+https://dscontrol.org/tp/multi1
+
+
+https://controlds.net/apps/files/?dir=/&fileid=6
