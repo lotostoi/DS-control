@@ -34,50 +34,48 @@ new Vue({
     },
 
     beforeMount() {
-        this.screen = this.$el.dataset.screen
 
-       
+        this.screen = this.$el.dataset.screen
         this.isControl = /сontrol/.test(this.$el.dataset.name)
+
+        console.log('id:', this.id)
     },
 
     mounted() {
 
-        if (this.screen === 'main') {
 
-            this.pictures = IFRAMES.map(i => { return { link: i, teg: 'iframe' } })
-           // console.log(IFRAMES.map(i => { return {link: i , teg: 'iframe'} }))
 
-        } else { 
-
-            if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
-                let link = '/getData/' + this.$el.dataset.link.replace('/', '_')
+        if (!this.isControl && this.$el.dataset.link !== "/getData{link}") {
+            let link = '/getData/' + this.$el.dataset.link.replace('/', '_')
 
 
 
-                return fetch(link, {
-                    headers: {
-                        'Content-Type': 'application/json'
+            return fetch(link, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+                .then(data => {
+                    if (!data.error) {
+
+                        this.pictures = data
+
+                        this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
+
+                        this.id = this.$el.dataset.id
+
+                        this.eventsSoketIo()
+                        
+                    } else {
+                        this.error = true
                     }
-                }).then(data => data.json())
-                    .then(data => {
-                        if (!data.error) {
-                         
-                            this.pictures = data
-                            this.pictures.forEach(e => e.vudeo = e.teg == 'video' ? true : false)
-                           
-                            this.id = this.$el.dataset.id
-                            this.eventsSoketIo()
-                        } else {
-                            this.error = true
-                        }
 
-                    })
-            }
-
+                })
         }
 
-        
 
+
+        
 
     },
     methods: {
@@ -107,10 +105,11 @@ new Vue({
 
         },
         swipeLeft() {
-       
+
 
             if (this.screen !== 'nocontrol') {
                 this.socket.emit('touchLeft', this.id)
+             
             } else {
                 this.dairection = 'left'
                 this.currentSlide = --this.currentSlide < 0 ? this.pictures.length - 1 : this.currentSlide
@@ -118,9 +117,10 @@ new Vue({
             }
         },
         swipeRight() {
-          
+
             if (this.screen !== 'nocontrol') {
                 this.socket.emit('touchRight', this.id)
+               
             } else {
                 this.dairection = 'right'
                 this.currentSlide = ++this.currentSlide > this.pictures.length - 1 ? 0 : this.currentSlide
@@ -172,7 +172,7 @@ new Vue({
                 video.volume = 0
                 let chengVolume = setInterval(() => {
                     video.volume = video.volume < 0.93 ? (video.volume + 0.03) : video.volume
-                   
+
                     if (video.volume > 0.93) {
                         clearInterval(chengVolume)
                     }

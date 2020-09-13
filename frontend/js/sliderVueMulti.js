@@ -118,10 +118,6 @@ new Vue({
     components: { slider },
     data: {
         socket: io.connect(),
-        /* 
-                currentSlide: 0,
-                oldSlide: 0, */
-        /*   dairection: 'none', */
         path: '',
         id: '',
         isControl: false,
@@ -154,14 +150,17 @@ new Vue({
                 }
             }).then(data => data.json())
                 .then(data => {
+
                     if (!data.error) {
 
 
-                        this.sliders = data.map((sl, i) => { return { pictures: sl, show: false, id: 'id'+i } })
+                        this.sliders = data.map((sl, i) => { return { pictures: sl, show: false, id: 'id' + i } })
 
                         this.sliders[0].show = true
 
                         this.getPictures([...this.sliders[this.index].pictures])
+
+                        this.id = this.$el.dataset.id
 
                         this.eventsSoketIo()
 
@@ -188,18 +187,22 @@ new Vue({
 
             this.socket.on('touchLeftServer', (data) => {
 
+                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */) return false
+
                 this.index = --this.index < 0 ? this.sliders.length - 1 : this.index
                 this.oldndex = this.index != this.sliders.length - 1 ? this.index + 1 : 0
 
-     
+
             })
 
             this.socket.on('touchRightServer', (data) => {
 
+                if (data != this.id || this.isControl  /* || this.screen === 'nocontrol' */) return false
+
                 this.index = ++this.index > this.sliders.length - 1 ? 0 : this.index
                 this.oldSlide = this.index != 0 ? this.index - 1 : this.sliders.length - 1
 
-      
+
             })
         },
         fullScreenOn() {
