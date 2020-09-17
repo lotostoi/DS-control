@@ -20,13 +20,13 @@ const slider = Vue.component('slider', {
     template: `
     <div class="oneOfMulti" >
             <div class="slideMulti" :class="addClass(i)" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
-                v-for="(img,i) in pictures" v-touch:swipe.bottom="fullScreenOn">
+                v-for="(img,i) in pictures">
            
                 <img v-if="(img.teg == 'img')" :src="img.link" alt="img" :style =" img.size.height > img.size.width ? 'height:' + 100/img.size.k + '%' : false">
                 <video v-if="(img.teg == 'video')" :src="img.link" :ref="img.name">
                     <source :src="img.link">
                 </video>
-                
+
             </div>
     </div>
     `,
