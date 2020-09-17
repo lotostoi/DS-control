@@ -1,6 +1,7 @@
 // функция сканирования дерктории, и возвращающая объект пуями и именами кратинок
 
 const { isNumber } = require('util')
+let sizeOf = require('image-size');
 
 let path = require('path')
 let fs = require('fs')
@@ -19,7 +20,7 @@ module.exports = async function ScanDir(dir) {
     }
 
     let files = await readDir(folderName)
-  
+
     // Убиреам из масива не картинки
     files = files.filter(e => /.jpg/.test(e) || /.png/.test(e) || /.mp4/.test(e) || /.vom/.test(e))
 
@@ -31,10 +32,19 @@ module.exports = async function ScanDir(dir) {
     }
 
     return files.map(e => {
+        let size
+        if (/.jpg/.test(e) || /.png/.test(e)) {
+            size = sizeOf(path.join('frontend', 'images', dir, e))
+        }
+
         return {
             link: path.join('/frontend', 'images', dir, e),
             name: path.parse(e).name,
-            teg: /.jpg/.test(e) || /.png/.test(e) ? 'img' : 'video'
+            teg: /.jpg/.test(e) || /.png/.test(e) ? 'img' : 'video',
+            size: /.jpg/.test(e) || /.png/.test(e) ?
+                { width: size.width, height: size.height, k: size.width / size.height } :
+                false
+
         }
     })
 }

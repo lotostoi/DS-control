@@ -45,8 +45,6 @@ router.get('/tp/:id', async (req, res) => {
 
         if (first.includes('multi')) {
 
-            console.log('multi')
-
             return res.send(await editTamplate(path.join('frontend', 'multi.html'), first, 'multi', l))
 
         } 
